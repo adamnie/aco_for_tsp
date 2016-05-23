@@ -1,65 +1,58 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 
-plt.ion()
 
-G = nx.Graph()
+class Visualisation:
 
-node1 = (0, 0)
-node2 = (0, 2)
-node3 = (1, 1)
-node4 = (1, -1)
-node5 = (3, 3)
-node6 = (-3, 3)
+    def __init__(self, cities):
+        self.cities = cities
+        self.old_data = list()
+        self.G = nx.Graph()
 
-G.add_node(node1, pos=node1)
-G.add_node(node2, pos=node2)
-G.add_node(node3, pos=node3)
-G.add_node(node4, pos=node4)
-G.add_node(node5, pos=node5)
-G.add_node(node6, pos=node6)
+    def initialize_graph_with_nodes(self):
+        plt.figure(0, (10, 8))
+        plt.ion()
 
-G.add_edge(node6, node5)
-G.add_edge(node5, node3)
-G.add_edge(node3, node2)
-G.add_edge(node2, node4)
-G.add_edge(node4, node1)
-G.add_edge(node1, node6)
+        for index, city in enumerate(self.cities[1]):
+            self.G.add_node(self.cities[0][index], pos=city, label=self.cities[0][index])
 
+        pos = nx.get_node_attributes(self.G, 'pos')
+        labels = nx.get_node_attributes(self.G, 'label')
+        nx.draw_networkx_nodes(self.G, pos, node_color='b', alpha=0.8, label=labels)
+        nx.draw_networkx_labels(self.G, pos, labels, font_size=12, font_color='white')
 
-pos = nx.get_node_attributes(G, 'pos')
+        plt.plot()
 
-nx.draw_networkx_nodes(G, pos, node_color='b', alpha=0.8)
-nx.draw_networkx_edges(G, pos)
+    def draw_path(self, data, shortest_iteration, iteration, shortest_path_length, avg_path_length):
+        plt.pause(1)
+        plt.clf()
+        plt.suptitle("Iteration: " + str(iteration) + "       Shortest iteration: " + str(shortest_iteration) +
+                     "\nShortest path length: " + str(shortest_path_length) +
+                     "      Average path length: " + str(avg_path_length))
 
-plt.plot()
+        if self.old_data:
+            for elem, next_elem in zip(self.old_data, self.old_data[1:] + [self.old_data[0]]):
+                print self.cities[0][elem] + " , " + self.cities[0][next_elem]
+                self.G.remove_edge(self.cities[0][elem], self.cities[0][next_elem])
 
-plt.pause(2)
+            self.old_data = []
 
-G.remove_edge(node6, node5)
-G.remove_edge(node5, node3)
-G.remove_edge(node3, node2)
-G.remove_edge(node2, node4)
-G.remove_edge(node4, node1)
-G.remove_edge(node1, node6)
+        for elem, next_elem in zip(data, data[1:] + [data[0]]):
+            print "----- new data ----"
+            print self.cities[0][elem] + " , " + self.cities[0][next_elem]
+            self.G.add_edge(self.cities[0][elem], self.cities[0][next_elem])
+            print "----- new data ----"
 
-G.add_edge(node6, node3)
-G.add_edge(node3, node5)
-G.add_edge(node5, node2)
-G.add_edge(node2, node4)
-G.add_edge(node4, node1)
-G.add_edge(node1, node6)
+        pos = nx.get_node_attributes(self.G, 'pos')
+        labels = nx.get_node_attributes(self.G, 'label')
+        nx.draw_networkx_nodes(self.G, pos, node_color='b', alpha=0.8, label=labels)
+        nx.draw_networkx_labels(self.G, pos, labels, font_size=12, font_color='white')
+        nx.draw_networkx_edges(self.G, pos)
 
-plt.clf()
-nx.draw_networkx_nodes(G, pos, node_color='b', alpha=0.8)
-nx.draw_networkx_edges(G, pos)
+        self.old_data = data
 
+        plt.plot()
 
-plt.plot()
-
-plt.ioff()
-
-plt.show()
-
-
-
+    def final_show_plot(self):
+        plt.ioff()
+        plt.show()

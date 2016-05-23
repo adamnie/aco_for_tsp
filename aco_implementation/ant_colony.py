@@ -3,13 +3,15 @@ from threading import Lock, Condition
 import sys
 import random
 
+
 class AntColony:
 
-    def __init__(self, graph, ants_count, max_number_of_iterations, alpha=0.1):
+    def __init__(self, graph, ants_count, max_number_of_iterations, visualisation, alpha=0.1):
         self.graph = graph
         self.ants_count = ants_count
         self.max_number_of_iterations = max_number_of_iterations
         self.Alpha = alpha
+        self.visualisation = visualisation
 
         self.condition = Condition()
         self.reset()
@@ -26,6 +28,9 @@ class AntColony:
 
         while self.iteration_counter < self.max_number_of_iterations:
             self.iteration()
+
+            self.visualisation.draw_path(self.shortest_path, self.shortest_path_convergence_iteration,
+                                         self.iteration_counter, self.shortest_path_length, self.avg_path_length)
 
             self.condition.acquire()
             # self.condition.wait()
