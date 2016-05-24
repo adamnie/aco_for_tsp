@@ -24,7 +24,7 @@ class Visualisation:
         plt.plot()
 
     def draw_path(self, data, shortest_iteration, iteration, shortest_path_length, avg_path_length):
-        plt.pause(1)
+        plt.pause(0.25)
         plt.clf()
         plt.suptitle("Iteration: " + str(iteration) + "       Shortest iteration: " + str(shortest_iteration) +
                      "\nShortest path length: " + str(shortest_path_length) +
@@ -32,16 +32,12 @@ class Visualisation:
 
         if self.old_data:
             for elem, next_elem in zip(self.old_data, self.old_data[1:] + [self.old_data[0]]):
-                print self.cities[0][elem] + " , " + self.cities[0][next_elem]
                 self.G.remove_edge(self.cities[0][elem], self.cities[0][next_elem])
 
             self.old_data = []
 
         for elem, next_elem in zip(data, data[1:] + [data[0]]):
-            print "----- new data ----"
-            print self.cities[0][elem] + " , " + self.cities[0][next_elem]
             self.G.add_edge(self.cities[0][elem], self.cities[0][next_elem])
-            print "----- new data ----"
 
         pos = nx.get_node_attributes(self.G, 'pos')
         labels = nx.get_node_attributes(self.G, 'label')

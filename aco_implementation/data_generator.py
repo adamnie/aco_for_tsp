@@ -29,5 +29,3 @@ def get_random_data(n):
     result.append(cities_distances)
 
     return result
-
-print get_random_data(3)

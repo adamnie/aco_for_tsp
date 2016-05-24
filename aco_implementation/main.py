@@ -7,7 +7,7 @@ from graph import Graph
 #default
 from visualisation import *
 
-num_nodes = 12
+num_nodes = 7
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1]:
