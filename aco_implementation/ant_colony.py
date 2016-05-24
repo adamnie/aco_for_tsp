@@ -49,7 +49,7 @@ class AntColony:
         ants = []
 
         for i in range(self.ants_count):
-            ant = Ant(i, random.randint(0, self.graph.nodes_count - 1), self)
+            ant = Ant(i, random.randint(0, self.graph.nodes_count - 1), self)#, self.Alpha)
             ants.append(ant)
 
         return ants

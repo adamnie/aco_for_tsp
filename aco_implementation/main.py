@@ -14,12 +14,12 @@ if __name__ == "__main__":
         num_nodes = int(sys.argv[1])
 
     if num_nodes <= 10:
-        num_ants = 10
-        num_iterations = 12
+        num_ants = 20
+        num_iterations = 18
         num_repetitions = 1
     else:
-        num_ants = 28
-        num_iterations = 20
+        num_ants = 35
+        num_iterations = 30
         num_repetitions = 1
 
     stuff = get_random_data(num_nodes)
@@ -41,7 +41,7 @@ if __name__ == "__main__":
     best_path_cost = sys.maxsize
     for i in range(0, num_repetitions):
         graph.reset_pheromone()
-        ant_colony = AntColony(graph, num_ants, num_iterations, visualisation)
+        ant_colony = AntColony(graph, num_ants, num_iterations, visualisation, 0.1)
         ant_colony.start()
         if ant_colony.shortest_path_length < best_path_cost:
             best_path_vec = ant_colony.shortest_path

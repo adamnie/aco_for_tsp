@@ -1,11 +1,10 @@
 import math
 from threading import *
-import sys
+import random
 
 
 class Ant(Thread):
-
-    def __init__(self, id, start_node, colony):
+    def __init__(self, id, start_node, colony, alpha=0.1):
         Thread.__init__(self)
         self.id = id
         self.start_node = start_node
@@ -18,10 +17,12 @@ class Ant(Thread):
         self.path.append(start_node)
         self.path_length = 0
 
+        self.go_pheromone_probability = 0.5
+
         #parameters
-        self.Alpha = 0.1
-        self.Beta = 1
-        self.evaporation_coefficient = 0.7
+        self.Alpha = alpha
+        self.Beta = 5
+        self.evaporation_coefficient = 0.99
 
         self.remaining_nodes = {}
 
@@ -74,14 +75,29 @@ class Ant(Thread):
             distance = self.graph.get_distance(self.current_node, node)
             pheromone_sum += math.pow(pheromone, self.Alpha) * math.pow(distance, -1 * self.Beta)
 
-        for node in self.remaining_nodes.values():
-            pheromone = self.graph.get_pheromone(self.current_node, node)
-            distance = self.graph.get_distance(self.current_node, node)
-            probability = self.calculate_path_probability(distance, pheromone, pheromone_sum)
+        avg_path_probability = pheromone_sum / len(self.remaining_nodes)
 
-            if probability > probability_of_being_chosen:
-                probability_of_being_chosen = probability
-                chosen_node = node
+        rand_or_pheronome = random.random();
+
+        if rand_or_pheronome < self.go_pheromone_probability:
+
+            for node in self.remaining_nodes.values():
+                pheromone = self.graph.get_pheromone(self.current_node, node)
+                distance = self.graph.get_distance(self.current_node, node)
+                probability = self.calculate_path_probability(distance, pheromone, pheromone_sum)
+
+                if probability > probability_of_being_chosen:
+                    probability_of_being_chosen = probability
+                    chosen_node = node
+        else:
+            for node in self.remaining_nodes.values():
+                pheromone = self.graph.get_pheromone(self.current_node, node)
+                distance = self.graph.get_distance(self.current_node, node)
+                probability = self.calculate_path_probability(distance, pheromone, pheromone_sum)
+
+                if probability > avg_path_probability:
+                    chosen_node = node
+                    return chosen_node
 
         if chosen_node is None:
             raise Exception("No node has been chosen for ant %s and node %s" % (self.id, self.current_node))
