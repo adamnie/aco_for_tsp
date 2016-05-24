@@ -17,15 +17,15 @@ def get_random_data(n):
 
     cities_distances = []
 
-    for city1 in cities_map.keys():
+    for city1 in list(cities_map.keys()):
         local_list = []
-        for city2 in cities_map.keys():
+        for city2 in list(cities_map.keys()):
             local_list.append(int((hypot(cities_map[city1][0] - cities_map[city2][0],
                                          cities_map[city1][1] - cities_map[city2][1])))*10)
         cities_distances.append(local_list)
 
-    result.append(cities_map.keys())
-    result.append(cities_map.values())
+    result.append(list(cities_map.keys()))
+    result.append(list(cities_map.values()))
     result.append(cities_distances)
 
     return result
