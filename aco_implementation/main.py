@@ -7,7 +7,7 @@ from graph import Graph
 #default
 from visualisation import *
 
-num_nodes = 7
+num_nodes = 9
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1]:
@@ -15,12 +15,12 @@ if __name__ == "__main__":
 
     if num_nodes <= 10:
         num_ants = 20
-        num_iterations = 18
-        num_repetitions = 1
+        num_iterations = 10
+        num_repetitions = 5
     else:
-        num_ants = 35
-        num_iterations = 30
-        num_repetitions = 1
+        num_ants = 30
+        num_iterations = 40
+        num_repetitions = 5
 
     stuff = get_random_data(num_nodes)
     cities = stuff[0]

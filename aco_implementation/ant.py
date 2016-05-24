@@ -17,12 +17,12 @@ class Ant(Thread):
         self.path.append(start_node)
         self.path_length = 0
 
-        self.go_pheromone_probability = 0.5
+        self.go_pheromone_probability = 0.9
 
         #parameters
         self.Alpha = alpha
         self.Beta = 5
-        self.evaporation_coefficient = 0.99
+        self.evaporation_coefficient = 0.90
 
         self.remaining_nodes = {}
 
