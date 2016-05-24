@@ -48,7 +48,11 @@ class Visualisation:
         self.old_data = data
 
         plt.plot()
+        plt.ylim([-55, 55])
+        plt.xlim([-55, 55])
 
     def final_show_plot(self):
+        plt.ylim([-55, 55])
+        plt.xlim([-55, 55])
         plt.ioff()
         plt.show()
