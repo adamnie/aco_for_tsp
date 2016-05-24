@@ -22,6 +22,8 @@ class Visualisation:
         nx.draw_networkx_labels(self.G, pos, labels, font_size=12, font_color='white')
 
         plt.plot()
+        plt.ylim([-55, 55])
+        plt.xlim([-55, 55])
 
     def draw_path(self, data, shortest_iteration, iteration, shortest_path_length, avg_path_length):
         plt.pause(0.25)
