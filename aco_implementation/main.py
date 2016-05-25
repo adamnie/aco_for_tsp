@@ -49,6 +49,8 @@ if __name__ == "__main__":
             best_path_cost = ant_colony.shortest_path_length
             visualisation.save_best_path(best_path_vec)
 
+        visualisation.draw_best_path(best_path_vec)
+
     print("\n------------------------------------------------------------")
     print("                     Results                                ")
     print("------------------------------------------------------------")

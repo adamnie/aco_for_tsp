@@ -42,9 +42,6 @@ class AntColony:
 
             self.condition.release()
 
-        self.visualisation.draw_path(self.shortest_path, self.shortest_path_convergence_iteration,
-                                     self.iteration_counter, self.shortest_path_length, self.avg_path_length, last=True)
-
     def create_ants(self):
         self.reset()
 

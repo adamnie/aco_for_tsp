@@ -78,6 +78,11 @@ class Visualisation:
         plt.ylim([-55, 55])
         plt.xlim([-55, 55])
 
+    def draw_best_path(self, data):
+        self.best_path = data
+        self.draw_path(data, self.shortest_iteration, self.iteration, self.shortest_path_length, self.avg_path_length,
+                       last=True)
+
     def save_best_path(self, data):
         self.best_path = data
 
