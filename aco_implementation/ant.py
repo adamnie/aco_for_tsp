@@ -90,14 +90,7 @@ class Ant(Thread):
                     probability_of_being_chosen = probability
                     chosen_node = node
         else:
-            for node in self.remaining_nodes.values():
-                pheromone = self.graph.get_pheromone(self.current_node, node)
-                distance = self.graph.get_distance(self.current_node, node)
-                probability = 1 / distance
-
-                if probability > probability_of_being_chosen:
-                    probability_of_being_chosen = probability
-                    chosen_node = node
+            chosen_node = random.choice(list(self.remaining_nodes.values()))
 
         if chosen_node is None:
             raise Exception("No node has been chosen for ant %s and node %s" % (self.id, self.current_node))

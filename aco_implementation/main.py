@@ -14,13 +14,13 @@ if __name__ == "__main__":
         num_nodes = int(sys.argv[1])
 
     if num_nodes <= 10:
-        num_ants = 10
-        num_iterations = 10
-        num_repetitions = 1
+        num_ants = 15
+        num_iterations = 15
+        num_repetitions = 5
     else:
         num_ants = 18
         num_iterations = 20
-        num_repetitions = 1
+        num_repetitions = 10
 
     stuff = get_random_data(num_nodes)
     cities = stuff[0]
