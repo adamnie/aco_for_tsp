@@ -43,9 +43,11 @@ if __name__ == "__main__":
         graph.reset_pheromone()
         ant_colony = AntColony(graph, num_ants, num_iterations, visualisation, 0.1)
         ant_colony.start()
+        visualisation.save_repetition(i+2)
         if ant_colony.shortest_path_length < best_path_cost:
             best_path_vec = ant_colony.shortest_path
             best_path_cost = ant_colony.shortest_path_length
+            visualisation.save_best_path(best_path_vec)
 
     print("\n------------------------------------------------------------")
     print("                     Results                                ")

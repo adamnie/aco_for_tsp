@@ -5,7 +5,6 @@ import random
 
 
 class AntColony:
-
     def __init__(self, graph, ants_count, max_number_of_iterations, visualisation, alpha=0.1):
         self.graph = graph
         self.ants_count = ants_count
@@ -41,7 +40,10 @@ class AntColony:
             self.pheromone_evaporation()
             lock.release()
 
-            self.condition.release();
+            self.condition.release()
+
+        self.visualisation.draw_path(self.shortest_path, self.shortest_path_convergence_iteration,
+                                     self.iteration_counter, self.shortest_path_length, self.avg_path_length, last=True)
 
     def create_ants(self):
         self.reset()
@@ -49,7 +51,7 @@ class AntColony:
         ants = []
 
         for i in range(self.ants_count):
-            ant = Ant(i, random.randint(0, self.graph.nodes_count - 1), self)#, self.Alpha)
+            ant = Ant(i, random.randint(0, self.graph.nodes_count - 1), self)  # , self.Alpha)
             ants.append(ant)
 
         return ants
@@ -97,7 +99,9 @@ class AntColony:
             self.avg_path_length /= self.ants_count
 
             print("Shortest path found: %s, %s, %s, %s" % (self.shortest_path,
-                   self.shortest_path_length, self.shortest_path_convergence_iteration, self.avg_path_length))
+                                                           self.shortest_path_length,
+                                                           self.shortest_path_convergence_iteration,
+                                                           self.avg_path_length))
             self.condition.acquire()
             self.condition.notify_all()
             self.condition.release()
@@ -114,7 +118,7 @@ class AntColony:
             for j in range(self.graph.nodes_count):
                 if i != j:
                     pheromone = self.shortest_path_matrix[i][j] / self.shortest_path_length
-                    evaporation = (1 - self.Alpha) * self.graph.get_pheromone(i,j)
+                    evaporation = (1 - self.Alpha) * self.graph.get_pheromone(i, j)
                     deposition = self.Alpha * pheromone
 
                     self.graph.update_phermomene(i, j, evaporation + deposition)
